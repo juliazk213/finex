@@ -1,6 +1,18 @@
-import Link from "next/link"
+"use client" // Necessário para usar hooks
+
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function FineloQuizStep7() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Função para navegar para a próxima página, mantendo todos os parâmetros existentes
+  const handleContinue = () => {
+    // A função toString() nos dá a string de query completa (ex: "goal=Grow+wealth&income_source=..."),
+    // que é exatamente o que precisamos repassar.
+    router.push(`/step8?${searchParams.toString()}`)
+  }
+
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       {/* Header - Simple logo only */}
@@ -10,7 +22,7 @@ export default function FineloQuizStep7() {
             <span className="text-green-400">F</span>inelo
           </div>
         </div>
-      </header>
+      </header
 
       {/* Main Content - Adicionado 'flex-grow' para empurrar o botão para baixo */}
       <main className="flex-grow flex items-center justify-center p-4">
@@ -37,13 +49,16 @@ export default function FineloQuizStep7() {
         </div>
       </main>
 
-      {/* Continue Button */}
+      {/* Continue Button - <Link> substituído por <button> com onClick */}
       <footer className="flex justify-center p-4">
-        <Link href="/step8" className="w-full max-w-md">
-          <button className="w-full bg-green-400 hover:bg-green-500 text-black font-bold py-4 px-12 rounded-lg text-lg transition-colors">
+        <div className="w-full max-w-md">
+          <button
+            onClick={handleContinue}
+            className="w-full bg-green-400 hover:bg-green-500 text-black font-bold py-4 px-12 rounded-lg text-lg transition-colors"
+          >
             CONTINUE
           </button>
-        </Link>
+        </div>
       </footer>
     </div>
   )

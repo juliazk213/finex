@@ -8,10 +8,8 @@ export default function FineloQuizStep29() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const canvasRef = useRef<HTMLCanvasElement>(null)
-
   const [isScratching, setIsScratching] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  // 1. Novo estado para controlar a visibilidade do prêmio
   const [isPrizeVisible, setIsPrizeVisible] = useState(false)
 
   const nameFromUrl = searchParams.get("name") || "promo"
@@ -79,10 +77,9 @@ export default function FineloQuizStep29() {
     }
   }
 
-  // 2. Atualizado para ativar a visibilidade do prêmio na primeira interação
   const handleStartScratching = () => {
     setIsScratching(true)
-    setIsPrizeVisible(true) // <-- Torna o prêmio visível no DOM
+    setIsPrizeVisible(true)
   }
   const handleEndScratching = () => setIsScratching(false)
   
@@ -95,9 +92,12 @@ export default function FineloQuizStep29() {
     if (isScratching) scratch(e)
   }
 
+  // --- CORREÇÃO APLICADA AQUI ---
+  // A função agora passa TODOS os parâmetros da URL para a próxima página.
   const handleClaimDiscount = () => {
-    router.push("/step30")
+    router.push(`/step30?${searchParams.toString()}`)
   }
+  // --- FIM DA CORREÇÃO ---
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -125,7 +125,6 @@ export default function FineloQuizStep29() {
         <div className="relative w-[230px] h-[230px]">
           <canvas
             ref={canvasRef}
-            // 3. Efeito de piscar (animate-pulse) removido
             className="absolute top-0 left-0 z-10 rounded-3xl cursor-pointer touch-none"
             onMouseDown={handleStartScratching}
             onMouseUp={handleEndScratching}
@@ -136,7 +135,6 @@ export default function FineloQuizStep29() {
             onTouchMove={handleTouchMove}
           />
           
-          {/* 4. O prêmio agora é renderizado condicionalmente */}
           {isPrizeVisible && (
             <div className="absolute top-0 left-0 w-full h-full">
               <div className="aspect-square w-[230px] overflow-hidden rounded-3xl bg-yellow-400 text-black">

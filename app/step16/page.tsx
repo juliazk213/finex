@@ -1,15 +1,15 @@
-"use client"
+"use client" // Necessário para usar hooks
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation" // Adicionado useSearchParams
 import { ArrowLeft } from "lucide-react"
-import Image from "next/image" // 1. Importar o Image de next/image
+import Image from "next/image"
 
-export default function Step16() {
+export default function FineloQuizStep16() {
   const router = useRouter()
+  const searchParams = useSearchParams() // Adicionado para ler parâmetros existentes
   const [selectedCompanies, setSelectedCompanies] = useState<string[]>([])
 
-  // 2. Atualizar a estrutura de dados para usar caminhos de imagem
   const companies = [
     { name: "Netflix", image: "/stocks/netflix.webp" },
     { name: "Tesla", image: "/stocks/tesla.webp" },
@@ -27,12 +27,17 @@ export default function Step16() {
     setSelectedCompanies((prev) => (prev.includes(company) ? prev.filter((c) => c !== company) : [...prev, company]))
   }
 
+  // Função handleNext ajustada para passar os parâmetros
   const handleNext = () => {
-    router.push("/step17")
+    const params = new URLSearchParams(searchParams)
+    // Converte o array de empresas em uma string separada por vírgulas
+    params.set("interested_companies", selectedCompanies.join(","))
+    router.push(`/step17?${params.toString()}`)
   }
 
+  // A função handleBack agora usa router.back() para simplicidade
   const handleBack = () => {
-    router.push("/step15")
+    router.back()
   }
 
   return (
@@ -78,13 +83,12 @@ export default function Step16() {
                   }
                 `}
               >
-                {/* 3. Substituir o div do ícone pelo componente Image */}
                 <Image
                   src={company.image}
                   alt={`${company.name} logo`}
                   width={32}
                   height={32}
-                  className="w-8 h-8 rounded-full object-cover" // rounded-full para manter o formato circular
+                  className="w-8 h-8 rounded-full object-cover"
                 />
                 <span className="text-white font-medium text-sm sm:text-base">{company.name}</span>
               </button>

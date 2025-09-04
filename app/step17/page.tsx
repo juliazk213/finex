@@ -1,51 +1,37 @@
-"use client"
+"use client" // Necessário para usar hooks
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation" // Adicionado useSearchParams
 import { ArrowLeft, Lightbulb, BookOpen, TrendingUp } from "lucide-react"
 
-export default function Step17() {
+export default function FineloQuizStep17() {
   const router = useRouter()
+  const searchParams = useSearchParams() // Adicionado para ler parâmetros existentes
   const [selectedTools, setSelectedTools] = useState<string[]>([])
 
   const tools = [
-    {
-      id: "tips",
-      title: "Regular trading tips and tricks",
-      icon: <Lightbulb className="w-8 h-8 text-yellow-400" />,
-    },
-    {
-      id: "coach",
-      title: "AI Trading Coach",
-      icon: <div className="text-2xl">🤖</div>,
-    },
-    {
-      id: "learning",
-      title: "Personal Learning Plan",
-      icon: <BookOpen className="w-8 h-8 text-green-400" />,
-    },
-    {
-      id: "simulator",
-      title: "Virtual risk-free trading simulator",
-      icon: <TrendingUp className="w-8 h-8 text-red-400" />,
-    },
-    {
-      id: "strategies",
-      title: "Strategies of successful traders",
-      icon: <div className="text-2xl">😎</div>,
-    },
+    { id: "tips", title: "Regular trading tips and tricks", icon: <Lightbulb className="w-8 h-8 text-yellow-400" /> },
+    { id: "coach", title: "AI Trading Coach", icon: <div className="text-2xl">🤖</div> },
+    { id: "learning", title: "Personal Learning Plan", icon: <BookOpen className="w-8 h-8 text-green-400" /> },
+    { id: "simulator", title: "Virtual risk-free trading simulator", icon: <TrendingUp className="w-8 h-8 text-red-400" /> },
+    { id: "strategies", title: "Strategies of successful traders", icon: <div className="text-2xl">😎</div> },
   ]
 
   const toggleTool = (toolId: string) => {
     setSelectedTools((prev) => (prev.includes(toolId) ? prev.filter((id) => id !== toolId) : [...prev, toolId]))
   }
 
+  // Função handleNext ajustada para passar os parâmetros
   const handleNext = () => {
-    router.push("/step18")
+    const params = new URLSearchParams(searchParams)
+    // Converte o array de ferramentas em uma string separada por vírgulas
+    params.set("selected_tools", selectedTools.join(","))
+    router.push(`/step18?${params.toString()}`)
   }
 
+  // A função handleBack agora usa router.back() para simplicidade
   const handleBack = () => {
-    router.push("/step16")
+    router.back()
   }
 
   return (

@@ -1,24 +1,20 @@
-"use client" // 1. O arquivo inteiro precisa ser um Componente Cliente
+"use client" // O arquivo inteiro já é um Componente Cliente
 
-import Link from "next/link"
 import Image from "next/image"
-// 2. Importe 'Suspense' do React e 'useSearchParams' do Next.js
-import { Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation' // Hooks de navegação e URL
 
-// 3. Crie um componente interno SÓ para ler e exibir o objetivo.
-//    Isso isola a lógica que depende da URL.
-function GoalDisplay() {
-  const searchParams = useSearchParams()
-  const userGoal = searchParams.get('goal') || 'Your Goal'
-  
-  return (
-    <span className="text-white font-semibold">{userGoal}</span>
-  )
-}
-
-// Seu componente de página principal
 export default function FineloQuizStep24() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Lê o 'goal' diretamente na página. Não precisa de Suspense.
+  const userGoal = searchParams.get('goal') || 'Your Goal'
+
+  // Função para navegar para a próxima página, mantendo todos os parâmetros existentes
+  const handleContinue = () => {
+    router.push(`/step25?${searchParams.toString()}`)
+  }
+
   return (
     <div className="min-h-screen bg-black text-white flex flex-col p-4">
       {/* Header */}
@@ -46,15 +42,11 @@ export default function FineloQuizStep24() {
             <span className="underline">Confident Trader</span> by Nov, 2025
           </h2>
 
-          {/* Goal Section */}
+          {/* Goal Section - Simplificada */}
           <div className="mb-8">
             <div className="bg-gray-800 px-4 py-2 rounded-lg inline-block">
               <span className="text-white text-sm">Your goal: </span>
-              {/* 4. Envolva o componente dinâmico com Suspense. */}
-              {/*    Isso corrige o erro de build e o piscar do conteúdo padrão. */}
-              <Suspense fallback={<span className="font-semibold">...</span>}>
-                <GoalDisplay />
-              </Suspense>
+              <span className="text-white font-semibold">{userGoal}</span>
             </div>
           </div>
 
@@ -70,13 +62,16 @@ export default function FineloQuizStep24() {
         </div>
       </main>
 
-      {/* Continue Button */}
+      {/* Continue Button - <Link> substituído por <button> com onClick */}
       <footer className="flex justify-center py-4">
-        <Link href="/step25" className="w-full max-w-md">
-          <button className="w-full bg-green-400 hover:bg-green-500 text-black font-bold py-4 px-8 rounded-lg text-lg transition-colors">
+        <div className="w-full max-w-md">
+          <button
+            onClick={handleContinue}
+            className="w-full bg-green-400 hover:bg-green-500 text-black font-bold py-4 px-8 rounded-lg text-lg transition-colors"
+          >
             CONTINUE
           </button>
-        </Link>
+        </div>
       </footer>
     </div>
   )

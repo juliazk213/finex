@@ -1,10 +1,11 @@
-"use client"
+"use client" // Necessário para usar hooks
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation" // Adicionado useSearchParams
 
 export default function FineloQuizStep28() {
   const router = useRouter()
+  const searchParams = useSearchParams() // Adicionado para ler parâmetros existentes
   const [name, setName] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -13,17 +14,19 @@ export default function FineloQuizStep28() {
     e.preventDefault()
     setError("")
 
-    // Validação para garantir que o nome não está vazio
     if (!name.trim()) {
       setError("Please enter your name to continue.")
       return
     }
 
     setIsLoading(true)
-
-    // Codifica o nome para ser seguro na URL e o adiciona como parâmetro
+    
+    // --- CORREÇÃO APLICADA AQUI ---
+    const params = new URLSearchParams(searchParams)
     const formattedName = encodeURIComponent(name.trim())
-    router.push(`/step29?name=${formattedName}`)
+    params.set("name", formattedName) // Adiciona o nome aos outros parâmetros
+    
+    router.push(`/step29?${params.toString()}`) // Navega com a URL completa
   }
 
   return (
@@ -59,7 +62,6 @@ export default function FineloQuizStep28() {
             />
           </div>
 
-          {/* Exibe a mensagem de erro se houver */}
           {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
 
           <button

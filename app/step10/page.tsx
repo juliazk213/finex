@@ -1,8 +1,16 @@
-"use client"
+"use client" // Necessário para usar hooks
 
-import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function FineloQuizStep10() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Função para navegar para a próxima página, mantendo todos os parâmetros existentes
+  const handleContinue = () => {
+    router.push(`/step11?${searchParams.toString()}`)
+  }
+
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
       {/* Header - Simple logo only */}
@@ -40,13 +48,16 @@ export default function FineloQuizStep10() {
         </div>
       </main>
 
-      {/* Continue Button */}
+      {/* Continue Button - <Link> substituído por <button> com onClick */}
       <footer className="flex justify-center p-4">
-        <Link href="/step11" className="w-full max-w-md">
-          <button className="w-full bg-green-400 hover:bg-green-500 text-black font-bold py-4 px-12 rounded-lg text-lg transition-colors">
+        <div className="w-full max-w-md">
+          <button
+            onClick={handleContinue}
+            className="w-full bg-green-400 hover:bg-green-500 text-black font-bold py-4 px-12 rounded-lg text-lg transition-colors"
+          >
             CONTINUE
           </button>
-        </Link>
+        </div>
       </footer>
     </div>
   )

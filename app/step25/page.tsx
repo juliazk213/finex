@@ -1,64 +1,52 @@
-"use client"
+"use client" // O arquivo inteiro precisa ser um Componente Cliente
 
 import { useEffect, useState } from "react"
-import { useRouter } from 'next/navigation' // Importa useRouter para navegação
+import { useRouter, useSearchParams } from 'next/navigation' // Adicionado useSearchParams
 
 // Lista de depoimentos para o carrossel
 const testimonials = [
-  {
-    author: "Neil Chase",
-    title: "The experience is topnotch",
-    text: "“The material offered has taught me various aspects of trading via a website or app effectively. The content is very straightforward and accurate. Most importantly, it's simple to grasp, particularly for newcomers just beginning to explore trading strategies.”",
-  },
-  {
-    author: "Damian Paton",
-    title: "Great insights...",
-    text: "“The information provided here, especially trading insights, has truly been a revelation for me. It feels like a dream come true, as I've longed to connect with this level of knowledge for a while.”",
-  },
-  {
-    author: "Liam Stanford",
-    title: "Awesome investment...",
-    text: "“Incredible! Finelo has given me enhanced insights into trading, and I'm really enjoying the process of learning more about trading strategies and challenges.”",
-  },
+  { author: "Neil Chase", title: "The experience is topnotch", text: "“The material offered has taught me various aspects of trading via a website or app effectively. The content is very straightforward and accurate. Most importantly, it's simple to grasp, particularly for newcomers just beginning to explore trading strategies.”" },
+  { author: "Damian Paton", title: "Great insights...", text: "“The information provided here, especially trading insights, has truly been a revelation for me. It feels like a dream come true, as I've longed to connect with this level of knowledge for a while.”" },
+  { author: "Liam Stanford", title: "Awesome investment...", text: "“Incredible! Finelo has given me enhanced insights into trading, and I'm really enjoying the process of learning more about trading strategies and challenges.”" },
 ]
 
 export default function FineloQuizStep25() {
   const [progress, setProgress] = useState(0)
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0)
   const [loadingComplete, setLoadingComplete] = useState(false)
-  const router = useRouter() // Inicializa o hook useRouter
+  
+  const router = useRouter()
+  const searchParams = useSearchParams() // Adicionado para ler os parâmetros
 
   useEffect(() => {
-    // Tempo total de progresso: 35 segundos = 35000 ms
-    // Para ir de 0 a 100 em 35 segundos, precisamos de 100 passos.
-    // Intervalo de cada passo: 35000 ms / 100 passos = 350 ms
-    // No seu código, você definiu 250ms, o que fará o carregamento mais rápido (25 segundos).
-    // Se quiser 35 segundos exatos, mantenha 350ms.
-    // Usei 250ms como no seu último código, para manter a consistência, mas comentei a explicação.
-    const progressInterval = 180 // ms (250ms * 100 passos = 25 segundos. Se quiser 35s, mude para 350ms)
+    const progressInterval = 180 
 
     const progressTimer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(progressTimer)
-          setLoadingComplete(true) // Define que o carregamento foi completado
-          router.push('/step26') // Redireciona para a página /step26
+          setLoadingComplete(true) 
+          
+          // --- CORREÇÃO APLICADA AQUI ---
+          // Agora o redirecionamento inclui todos os parâmetros acumulados
+          router.push(`/step26?${searchParams.toString()}`) 
+          
           return 100
         }
         return prev + 1
       })
     }, progressInterval)
 
-    // Timer para o carrossel de depoimentos (a cada 5 segundos)
     const testimonialTimer = setInterval(() => {
       setCurrentTestimonialIndex((prev) => (prev + 1) % testimonials.length)
-    }, 5000) // Troca de depoimento a cada 5 segundos
+    }, 5000)
 
     return () => {
       clearInterval(progressTimer)
       clearInterval(testimonialTimer)
     }
-  }, [router]) // Adicione router como dependência para useEffect
+  // Adicione router e searchParams como dependências do useEffect
+  }, [router, searchParams]) 
 
   const currentTestimonial = testimonials[currentTestimonialIndex]
 
@@ -84,9 +72,7 @@ export default function FineloQuizStep25() {
         {/* Progress Circle */}
         <div className="relative w-32 h-32 mb-8">
           <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 120 120">
-            {/* Background circle */}
             <circle cx="60" cy="60" r="50" stroke="rgb(55, 65, 81)" strokeWidth="8" fill="none" />
-            {/* Progress circle */}
             <circle
               cx="60"
               cy="60"
@@ -115,7 +101,6 @@ export default function FineloQuizStep25() {
 
         {/* Testimonial Card (Carrossel) */}
         <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full min-h-[250px] flex flex-col justify-between">
-          {/* Stars */}
           <div className="flex gap-1 mb-3">
             {[...Array(5)].map((_, i) => (
               <svg key={i} className="w-5 h-5 text-green-400 fill-current" viewBox="0 0 20 20">
@@ -123,13 +108,8 @@ export default function FineloQuizStep25() {
               </svg>
             ))}
           </div>
-
           <h3 className="text-white font-semibold mb-3">{currentTestimonial.title}</h3>
-
-          <p className="text-gray-300 text-sm mb-4 flex-grow">
-            {currentTestimonial.text}
-          </p>
-
+          <p className="text-gray-300 text-sm mb-4 flex-grow">{currentTestimonial.text}</p>
           <p className="text-white font-medium text-right">{currentTestimonial.author}</p>
         </div>
       </div>

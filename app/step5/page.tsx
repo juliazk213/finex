@@ -1,15 +1,28 @@
+"use client"
+
 import { ArrowLeft } from "lucide-react"
-import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function FineloQuizStep5() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Função para lidar com a seleção e passar todos os parâmetros para a próxima página
+  const handleSelection = (incomeSource: string) => {
+    const params = new URLSearchParams(searchParams)
+    params.set("incomeSource", incomeSource) // Adiciona a resposta desta página
+    router.push(`/step6?${params.toString()}`)
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header with Progress */}
       <header className="bg-black">
         <div className="flex items-center justify-between p-4">
-          <Link href="/step4">
+          {/* Botão de voltar agora usa o histórico do navegador */}
+          <button onClick={() => router.back()} aria-label="Voltar">
             <ArrowLeft className="w-6 h-6 text-white" />
-          </Link>
+          </button>
           <div className="text-green-400 text-xl font-bold">
             <span className="text-green-400">F</span>inelo
           </div>
@@ -33,26 +46,29 @@ export default function FineloQuizStep5() {
             </h1>
           </div>
 
-          {/* Income Source Options */}
+          {/* Income Source Options - Agora usam onClick para navegação dinâmica */}
           <div className="space-y-4">
-            <Link href="/step6" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">💼</span>
-                <span className="text-lg">Full-time job</span>
-              </button>
-            </Link>
-            <Link href="/step6" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">📊</span>
-                <span className="text-lg">Passive income</span>
-              </button>
-            </Link>
-            <Link href="/step6" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">🤔</span>
-                <span className="text-lg">Other</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("Full-time job")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">💼</span>
+              <span className="text-lg">Full-time job</span>
+            </button>
+            <button
+              onClick={() => handleSelection("Passive income")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">📊</span>
+              <span className="text-lg">Passive income</span>
+            </button>
+            <button
+              onClick={() => handleSelection("Other")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">🤔</span>
+              <span className="text-lg">Other</span>
+            </button>
           </div>
         </div>
       </div>

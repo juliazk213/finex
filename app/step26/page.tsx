@@ -1,30 +1,27 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation" // Adicionado useSearchParams
 
 export default function FineloQuizStep26() {
   const [email, setEmail] = useState("")
   const [privacyChecked, setPrivacyChecked] = useState(true)
   const [newsletterChecked, setNewsletterChecked] = useState(true)
-  
-  // Novos estados para controle de envio
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
   const router = useRouter()
+  const searchParams = useSearchParams() // Adicionado para ler os parâmetros da URL
 
-  // Função para validar o formato do email
   const isEmailValid = (email: string) => {
     const emailRegex = /\S+@\S+\.\S+/
     return emailRegex.test(email)
   }
 
   const handleContinue = async (e: React.FormEvent) => {
-    e.preventDefault() // Previne o recarregamento da página ao submeter o formulário
-    setError("") // Limpa erros anteriores
+    e.preventDefault()
+    setError("")
 
-    // 1. Validação
     if (!isEmailValid(email)) {
       setError("Please enter a valid email address.")
       return
@@ -34,45 +31,46 @@ export default function FineloQuizStep26() {
       return
     }
 
-    setIsLoading(true) // Ativa o estado de carregamento
+    setIsLoading(true)
 
-    // 2. Preparação dos dados para o webhook
+    // --- CORREÇÃO APLICADA AQUI ---
+    // 1. Coleta todos os dados da URL em um objeto
+    const quizData = Object.fromEntries(searchParams.entries())
+
     const webhookUrl = "https://get.flwg.cc/webhook/49e56c7951d9fefe1a82c831185a9b78a2317d3502381595692c62debcde33d2"
+    
+    // 2. Mescla os dados do quiz com os dados do formulário atual
     const dataToSend = {
       email: email,
+      newsletter_opt_in: newsletterChecked,
+      ...quizData, // Adiciona todos os outros dados do quiz (goal, target, etc.)
       tag: "finelo - usuario criado",
       event: "Usuário Criado",
-      // Você pode adicionar mais dados aqui se precisar, por exemplo:
-      // newsletter_opt_in: newsletterChecked,
     }
 
     try {
-      // 3. Envio dos dados para o webhook
       const response = await fetch(webhookUrl, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataToSend),
       })
 
-      // Verifica se a requisição foi bem-sucedida
       if (!response.ok) {
-        // Se o servidor retornar um erro, lança uma exceção
         throw new Error("Failed to submit data. Please try again.")
       }
       
       console.log("Webhook successful:", await response.json());
-
-      // 4. Se tudo deu certo, navega para a próxima página
-      router.push("/step27")
+      
+      // 3. Adiciona o e-mail aos parâmetros da URL antes de navegar
+      const params = new URLSearchParams(searchParams)
+      params.set("email", email)
+      router.push(`/step27?${params.toString()}`)
 
     } catch (err: any) {
-      // 5. Tratamento de erro
       console.error("Webhook error:", err)
       setError(err.message || "An unexpected error occurred.")
     } finally {
-      setIsLoading(false) // Desativa o estado de carregamento
+      setIsLoading(false)
     }
   }
 
@@ -100,8 +98,6 @@ export default function FineloQuizStep26() {
           <br />
           Challenge!
         </h1>
-
-        {/* Usei a tag <form> para melhor semântica e acessibilidade */}
         <form onSubmit={handleContinue} className="w-full max-w-md">
           <div className="relative mb-6">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -123,10 +119,7 @@ export default function FineloQuizStep26() {
               disabled={isLoading}
             />
           </div>
-
-          {/* Mensagem de Erro */}
           {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
-
           <div className="space-y-4 mb-8">
             <div className="flex items-start gap-3">
               <div className="relative flex-shrink-0 mt-0.5">

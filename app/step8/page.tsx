@@ -1,18 +1,32 @@
-"use client"
+"use client" // Necessário para usar hooks
 
-import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function FineloQuizStep8() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Função para lidar com a seleção e passar TODOS os parâmetros adiante
+  const handleSelection = (retirementAnswer: string) => {
+    const params = new URLSearchParams(searchParams)
+    params.set("retirement_status", retirementAnswer) // Adiciona a resposta desta página
+    router.push(`/step9?${params.toString()}`) // Navega para a próxima com a URL completa
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header with Navigation */}
       <header className="bg-black">
         <div className="flex items-center justify-between p-4 max-w-6xl mx-auto">
-          <Link href="/step7" className="text-white hover:text-green-400 transition-colors">
+          <button
+            onClick={() => router.back()}
+            aria-label="Voltar"
+            className="text-white hover:text-green-400 transition-colors"
+          >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-          </Link>
+          </button>
 
           <div className="text-green-400 text-xl font-bold">
             <span className="text-green-400">F</span>inelo
@@ -34,28 +48,31 @@ export default function FineloQuizStep8() {
             Do you want to retire wealthy?
           </h1>
 
-          {/* Answer Options */}
+          {/* Answer Options - <Link> substituído por onClick */}
           <div className="space-y-4">
-            <Link href="/step9" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">😌</span>
-                <span className="text-lg">I'm already retired</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("I'm already retired")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">😌</span>
+              <span className="text-lg">I'm already retired</span>
+            </button>
 
-            <Link href="/step9" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">😵‍💫</span>
-                <span className="text-lg">Yes, but I don't know how</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("Yes, but I don't know how")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">😵‍💫</span>
+              <span className="text-lg">Yes, but I don't know how</span>
+            </button>
 
-            <Link href="/step9" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">😱</span>
-                <span className="text-lg">I haven't thought about retirement</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("I haven't thought about retirement")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">😱</span>
+              <span className="text-lg">I haven't thought about retirement</span>
+            </button>
           </div>
         </div>
       </div>

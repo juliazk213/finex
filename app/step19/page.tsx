@@ -1,18 +1,32 @@
-"use client"
+"use client" // Necessário para usar hooks
 
-import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function FineloQuizStep19() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Função para lidar com a seleção e passar TODOS os parâmetros adiante
+  const handleSelection = (earningGoal: string) => {
+    const params = new URLSearchParams(searchParams)
+    params.set("earning_goal", earningGoal) // Adiciona a resposta desta página
+    router.push(`/step20?${params.toString()}`) // Navega para a próxima com a URL completa
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <header className="bg-black">
         <div className="flex items-center justify-between p-4">
-          <Link href="/step18" className="text-white hover:text-green-400 transition-colors">
+          <button
+            onClick={() => router.back()}
+            aria-label="Voltar"
+            className="text-white hover:text-green-400 transition-colors"
+          >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-          </Link>
+          </button>
           <div className="text-green-400 text-xl font-bold">
             <span className="text-green-400">F</span>inelo
           </div>
@@ -31,26 +45,29 @@ export default function FineloQuizStep19() {
         </h1>
 
         <div className="w-full space-y-4">
-          <Link href="/step20" className="block">
-            <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-              <span className="text-2xl">💵</span>
-              <span className="text-lg">$30,000 - $50,000</span>
-            </button>
-          </Link>
+          <button
+            onClick={() => handleSelection("$30,000 - $50,000")}
+            className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+          >
+            <span className="text-2xl">💵</span>
+            <span className="text-lg">$30,000 - $50,000</span>
+          </button>
 
-          <Link href="/step20" className="block">
-            <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-              <span className="text-2xl">💸</span>
-              <span className="text-lg">$50,000 - $100,000</span>
-            </button>
-          </Link>
+          <button
+            onClick={() => handleSelection("$50,000 - $100,000")}
+            className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+          >
+            <span className="text-2xl">💸</span>
+            <span className="text-lg">$50,000 - $100,000</span>
+          </button>
 
-          <Link href="/step20" className="block">
-            <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-              <span className="text-2xl">💰</span>
-              <span className="text-lg">More than $100,000</span>
-            </button>
-          </Link>
+          <button
+            onClick={() => handleSelection("More than $100,000")}
+            className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+          >
+            <span className="text-2xl">💰</span>
+            <span className="text-lg">More than $100,000</span>
+          </button>
         </div>
       </div>
     </div>

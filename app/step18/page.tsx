@@ -1,13 +1,14 @@
-"use client"
+"use client" // Necessário para usar hooks
 
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation" // Adicionado useSearchParams
 
-export default function Step18() {
+export default function FineloQuizStep18() {
   const router = useRouter()
+  const searchParams = useSearchParams() // Adicionado para ler os parâmetros da URL
 
+  // A função agora repassa todos os parâmetros existentes para a próxima página
   const handleContinue = () => {
-    // Corrigido para redirecionar para /step19
-    router.push("/step19")
+    router.push(`/step19?${searchParams.toString()}`)
   }
 
   return (

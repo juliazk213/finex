@@ -1,14 +1,15 @@
-"use client"
+"use client" // Necessário para usar hooks
 
-import { useRouter } from "next/navigation"
-import Image from "next/image" // Importa o componente Image
+import { useRouter, useSearchParams } from "next/navigation" // Adicionado useSearchParams
+import Image from "next/image"
 
 export default function FineloQuizStep27() {
   const router = useRouter()
+  const searchParams = useSearchParams() // Adicionado para ler os parâmetros da URL
 
+  // A função agora repassa todos os parâmetros existentes para a próxima página
   const handleContinue = () => {
-    // Navigate to next step
-    router.push("/step28")
+    router.push(`/step28?${searchParams.toString()}`)
   }
 
   return (
@@ -40,9 +41,9 @@ export default function FineloQuizStep27() {
           <Image
             src="/progresse-curve.png"
             alt="Gráfico ilustrativo do nível de habilidades de trading"
-            width={700} // Largura original da imagem para manter a proporção
-            height={350} // Altura original da imagem para manter a proporção
-            className="w-full h-auto" // Classes para tornar a imagem responsiva
+            width={700}
+            height={350}
+            className="w-full h-auto"
           />
           <p className="text-gray-500 text-xs text-center mt-2">
             This chart is for illustrative purposes only

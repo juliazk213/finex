@@ -1,38 +1,22 @@
-"use client"
+"use client" // Necessário para usar hooks
 
 import Image from "next/image"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation" // Adicionado useSearchParams
 
-// 1. Componente renomeado para FineloQuizStep22b
 export default function FineloQuizStep22b() {
   const router = useRouter()
+  const searchParams = useSearchParams() // Adicionado para ler os parâmetros da URL
 
+  // A função agora repassa todos os parâmetros existentes para a próxima página
   const handleContinue = () => {
-    // 2. Redirecionamento ajustado para /step22
-    router.push("/step22")
+    router.push(`/step22?${searchParams.toString()}`)
   }
 
   const profileData = [
-    {
-      icon: "/pagina23/motivation.webp",
-      label: "Motivation",
-      value: "High",
-    },
-    {
-      icon: "/pagina23/potential.webp",
-      label: "Potential",
-      value: "High",
-    },
-    {
-      icon: "/pagina23/income.webp",
-      label: "Income",
-      value: "Fit for trading",
-    },
-    {
-      icon: "/pagina23/knowledge.webp",
-      label: "Knowledge",
-      value: "Intermediate",
-    },
+    { icon: "/pagina23/motivation.webp", label: "Motivation", value: "High" },
+    { icon: "/pagina23/potential.webp", label: "Potential", value: "High" },
+    { icon: "/pagina23/income.webp", label: "Income", value: "Fit for trading" },
+    { icon: "/pagina23/knowledge.webp", label: "Knowledge", value: "Intermediate" },
   ]
 
   return (
@@ -89,20 +73,18 @@ export default function FineloQuizStep22b() {
             </div>
           </div>
 
-          {/* Attributes and Image Section - SEMPRE LADO A LADO */}
+          {/* Attributes and Image Section */}
           <div className="flex flex-row items-end justify-center gap-4">
-            
-            {/* Left Column: Attributes List */}
             <div className="w-7/12">
               <div className="space-y-3 md:space-y-4">
                 {profileData.map((item) => (
                   <div key={item.label} className="flex items-center gap-2 md:gap-4">
                     <div className="p-2 rounded-lg bg-white">
-                      <Image 
-                        src={item.icon} 
-                        alt={`${item.label} icon`} 
-                        width={24} 
-                        height={24} 
+                      <Image
+                        src={item.icon}
+                        alt={`${item.label} icon`}
+                        width={24}
+                        height={24}
                         className="w-5 h-5 md:w-6 md:h-6"
                       />
                     </div>
@@ -114,8 +96,6 @@ export default function FineloQuizStep22b() {
                 ))}
               </div>
             </div>
-
-            {/* Right Column: Man's Image */}
             <div className="relative w-5/12 h-64 sm:h-80 lg:h-96">
               <div className="relative z-10 w-full h-full">
                 <Image
@@ -127,7 +107,6 @@ export default function FineloQuizStep22b() {
                 />
               </div>
             </div>
-            
           </div>
         </div>
       </main>

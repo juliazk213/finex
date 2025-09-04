@@ -1,17 +1,27 @@
-"use client"
+"use client" // Necessário para usar hooks
 
 import { ArrowLeft } from "lucide-react"
-import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function FineloQuizStep14() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Função para lidar com a seleção e passar TODOS os parâmetros adiante
+  const handleSelection = (tradingTopic: string) => {
+    const params = new URLSearchParams(searchParams)
+    params.set("trading_topic", tradingTopic) // Adiciona a resposta desta página
+    router.push(`/step15?${params.toString()}`) // Navega para a próxima com a URL completa
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <header className="bg-black">
         <div className="flex items-center justify-between p-4">
-          <Link href="/step13">
+          <button onClick={() => router.back()} aria-label="Voltar">
             <ArrowLeft className="w-6 h-6 text-white" />
-          </Link>
+          </button>
 
           <div className="text-green-400 text-xl font-bold">
             <span className="text-green-400">F</span>inelo
@@ -36,35 +46,39 @@ export default function FineloQuizStep14() {
             </h1>
           </div>
 
-          {/* Options */}
+          {/* Options - <Link> substituído por onClick */}
           <div className="w-full max-w-2xl space-y-4">
-            <Link href="/step15" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">⏰</span>
-                <span className="text-lg">Right time to sell and buy</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("Right time to sell and buy")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">⏰</span>
+              <span className="text-lg">Right time to sell and buy</span>
+            </button>
 
-            <Link href="/step15" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">🔍</span>
-                <span className="text-lg">Different asset types</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("Different asset types")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">🔍</span>
+              <span className="text-lg">Different asset types</span>
+            </button>
 
-            <Link href="/step15" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">⚖️</span>
-                <span className="text-lg">Risks and rewards</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("Risks and rewards")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">⚖️</span>
+              <span className="text-lg">Risks and rewards</span>
+            </button>
 
-            <Link href="/step15" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">🤔</span>
-                <span className="text-lg">I'm not sure yet</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("I'm not sure yet")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">🤔</span>
+              <span className="text-lg">I'm not sure yet</span>
+            </button>
           </div>
         </div>
       </div>

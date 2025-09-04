@@ -1,14 +1,30 @@
+"use client" // Necessário para usar hooks
+
 import { ArrowLeft } from "lucide-react"
-import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function FineloQuizStep4() {
+  const router = useRouter()
+  const searchParams = useSearchParams() // Usado para manter parâmetros anteriores (como o nome)
+
+  // Função que constrói a URL e navega
+  const handleSelection = (goalValue: string) => {
+    // 1. Cria um novo objeto de parâmetros baseado nos que já existem na URL
+    const params = new URLSearchParams(searchParams)
+    
+    // 2. Adiciona ou atualiza o parâmetro 'goal' com a nova seleção
+    params.set("goal", goalValue)
+
+    // 3. Navega para o próximo passo com TODOS os parâmetros (antigos + o novo)
+    router.push(`/step5?${params.toString()}`)
+  }
+
   return (
     <div className="min-h-screen bg-black text-white flex flex-col p-4">
-      {/* Header with Progress */}
       <header className="flex items-center justify-between">
-        <Link href="/step3">
+        <button onClick={() => router.back()} aria-label="Voltar">
           <ArrowLeft className="w-6 h-6 text-white" />
-        </Link>
+        </button>
         <div className="text-green-400 text-xl font-bold">
           <span className="text-green-400">F</span>inelo
         </div>
@@ -20,51 +36,38 @@ export default function FineloQuizStep4() {
         <div className="bg-green-400 h-1 rounded-full" style={{ width: "11.11%" }}></div>
       </div>
 
-      {/* Main Content */}
       <main className="flex-grow flex flex-col items-center justify-center">
         <div className="w-full max-w-2xl">
           <div className="mb-8 text-center">
             <h1 className="text-3xl lg:text-4xl font-bold mb-4">What is your main goal?</h1>
           </div>
 
-          {/* Goal Options */}
+          {/* Goal Options - Agora usando onClick */}
           <div className="space-y-4">
-            <Link href="/step5?goal=Grow wealth" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">💰</span>
-                <span className="text-base sm:text-lg">Grow wealth</span>
-              </button>
-            </Link>
-            <Link href="/step5?goal=Passive income" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">⚡</span>
-                <span className="text-base sm:text-lg">Passive income</span>
-              </button>
-            </Link>
-            <Link href="/step5?goal=Financial independence" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">🚀</span>
-                <span className="text-base sm:text-lg">Financial independence</span>
-              </button>
-            </Link>
-            <Link href="/step5?goal=Be my own boss" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">😎</span>
-                <span className="text-base sm:text-lg">Be my own boss</span>
-              </button>
-            </Link>
-            <Link href="/step5?goal=Retire wealthy" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">🏖️</span>
-                <span className="text-base sm:text-lg">Retire wealthy</span>
-              </button>
-            </Link>
-            <Link href="/step5?goal=Travel the world" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">🌍</span>
-                <span className="text-base sm:text-lg">Travel the world</span>
-              </button>
-            </Link>
+            <button onClick={() => handleSelection('Grow wealth')} className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
+              <span className="text-2xl">💰</span>
+              <span className="text-base sm:text-lg">Grow wealth</span>
+            </button>
+            <button onClick={() => handleSelection('Passive income')} className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
+              <span className="text-2xl">⚡</span>
+              <span className="text-base sm:text-lg">Passive income</span>
+            </button>
+            <button onClick={() => handleSelection('Financial independence')} className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
+              <span className="text-2xl">🚀</span>
+              <span className="text-base sm:text-lg">Financial independence</span>
+            </button>
+            <button onClick={() => handleSelection('Be my own boss')} className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
+              <span className="text-2xl">😎</span>
+              <span className="text-base sm:text-lg">Be my own boss</span>
+            </button>
+            <button onClick={() => handleSelection('Retire wealthy')} className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
+              <span className="text-2xl">🏖️</span>
+              <span className="text-base sm:text-lg">Retire wealthy</span>
+            </button>
+            <button onClick={() => handleSelection('Travel the world')} className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
+              <span className="text-2xl">🌍</span>
+              <span className="text-base sm:text-lg">Travel the world</span>
+            </button>
           </div>
         </div>
       </main>

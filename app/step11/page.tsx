@@ -1,17 +1,27 @@
-"use client"
+"use client" // Necessário para usar hooks
 
 import { ArrowLeft } from "lucide-react"
-import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function FineloQuizStep11() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Função para lidar com a seleção e passar TODOS os parâmetros adiante
+  const handleSelection = (fomoLevel: string) => {
+    const params = new URLSearchParams(searchParams)
+    params.set("fomo_level", fomoLevel) // Adiciona a resposta desta página
+    router.push(`/step12?${params.toString()}`) // Navega para a próxima com a URL completa
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <header className="bg-black">
         <div className="flex items-center justify-between p-4">
-          <Link href="/step10">
+          <button onClick={() => router.back()} aria-label="Voltar">
             <ArrowLeft className="w-6 h-6 text-white" />
-          </Link>
+          </button>
 
           <div className="text-green-400 text-xl font-bold">
             <span className="text-green-400">F</span>inelo
@@ -36,35 +46,39 @@ export default function FineloQuizStep11() {
             </h1>
           </div>
 
-          {/* Options */}
+          {/* Options - <Link> substituído por onClick */}
           <div className="w-full max-w-2xl space-y-4">
-            <Link href="/step12" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">😱</span>
-                <span className="text-lg">Yes, all the time</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("Yes, all the time")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">😱</span>
+              <span className="text-lg">Yes, all the time</span>
+            </button>
 
-            <Link href="/step12" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">😐</span>
-                <span className="text-lg">Sometimes</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("Sometimes")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">😐</span>
+              <span className="text-lg">Sometimes</span>
+            </button>
 
-            <Link href="/step12" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">😔</span>
-                <span className="text-lg">Rarely</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("Rarely")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">😔</span>
+              <span className="text-lg">Rarely</span>
+            </button>
 
-            <Link href="/step12" className="block">
-              <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4">
-                <span className="text-2xl">😎</span>
-                <span className="text-lg">Not at all</span>
-              </button>
-            </Link>
+            <button
+              onClick={() => handleSelection("Not at all")}
+              className="w-full bg-gray-800 hover:bg-gray-700 text-white p-6 rounded-lg text-left transition-colors flex items-center gap-4"
+            >
+              <span className="text-2xl">😎</span>
+              <span className="text-lg">Not at all</span>
+            </button>
           </div>
         </div>
       </div>
