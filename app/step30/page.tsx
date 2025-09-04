@@ -51,6 +51,8 @@ export default function FineloQuizStep30() {
   const [timeLeft, setTimeLeft] = useState({ minutes: 9, seconds: 54 })
   const [selectedPlan, setSelectedPlan] = useState("4-week") // Define o plano popular como padrão
   const nameFromUrl = searchParams.get("name") || "promo"
+  const goalFromUrl = searchParams.get("goal") || "Grow wealth"
+  const targetFromUrl = searchParams.get("target") || "Vacation"
   const couponCode = `${nameFromUrl.toLowerCase().replace(/\s+/g, "")}_set25`
 
   // --- INÍCIO DA MODIFICAÇÃO: Objeto com os textos dinâmicos ---
@@ -187,7 +189,6 @@ export default function FineloQuizStep30() {
 
             {/* Cards de Objetivo e Target - AJUSTADO PARA O ESTILO DA IMAGEM */}
             <div className="container mx-auto px-4 max-w-3xl">
-              {" "}
               {/* Wrapper para controlar a largura máxima */}
               <div className="flex flex-row gap-4 justify-center items-stretch mb-10">
                 {/* Card "Your goal" - Estilo Retangular */}
@@ -203,7 +204,7 @@ export default function FineloQuizStep30() {
                     <p className="text-gray-400 text-sm">Your goal</p>
                   </div>
                   {/* Grupo Direita: Valor */}
-                  <p className="text-white font-bold text-lg">Grow wealth</p>
+                  <p className="text-white font-bold text-lg">{goalFromUrl}</p>
                 </div>
 
                 {/* Card "Your target" - Estilo Retangular */}
@@ -219,7 +220,7 @@ export default function FineloQuizStep30() {
                     <p className="text-gray-400 text-sm">Your target</p>
                   </div>
                   {/* Grupo Direita: Valor */}
-                  <p className="text-white font-bold text-lg">Vacation</p>
+                  <p className="text-white font-bold text-lg">{targetFromUrl}</p>
                 </div>
               </div>
             </div>

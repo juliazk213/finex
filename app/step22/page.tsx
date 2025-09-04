@@ -1,8 +1,21 @@
 "use client"
 
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 
 export default function FineloQuizStep22() {
+  const searchParams = useSearchParams()
+  const nameFromUrl = searchParams.get("name") || ""
+  const goalFromUrl = searchParams.get("goal") || ""
+
+  const createUrlWithParams = (target: string) => {
+    const params = new URLSearchParams()
+    if (nameFromUrl) params.set("name", nameFromUrl)
+    if (goalFromUrl) params.set("goal", goalFromUrl)
+    params.set("target", target)
+    return `/step23?${params.toString()}`
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
@@ -36,42 +49,42 @@ export default function FineloQuizStep22() {
 
         {/* Options */}
         <div className="w-full max-w-2xl space-y-4 mb-12">
-          <Link href="/step23" className="block">
+          <Link href={createUrlWithParams("Buy a house")} className="block">
             <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-colors flex items-center gap-4">
               <span className="text-2xl">🏠</span>
               <span className="text-lg">Buy a house</span>
             </button>
           </Link>
 
-          <Link href="/step23" className="block">
+          <Link href={createUrlWithParams("A perfect wedding")} className="block">
             <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-colors flex items-center gap-4">
               <span className="text-2xl">💍</span>
               <span className="text-lg">A perfect wedding</span>
             </button>
           </Link>
 
-          <Link href="/step23" className="block">
+          <Link href={createUrlWithParams("Vacation")} className="block">
             <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-colors flex items-center gap-4">
               <span className="text-2xl">✈️</span>
               <span className="text-lg">Vacation</span>
             </button>
           </Link>
 
-          <Link href="/step23" className="block">
+          <Link href={createUrlWithParams("Buy a car")} className="block">
             <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-colors flex items-center gap-4">
               <span className="text-2xl">🚗</span>
               <span className="text-lg">Buy a car</span>
             </button>
           </Link>
 
-          <Link href="/step23" className="block">
+          <Link href={createUrlWithParams("Worry-free retirement")} className="block">
             <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-colors flex items-center gap-4">
               <span className="text-2xl">🥂</span>
               <span className="text-lg">Worry-free retirement</span>
             </button>
           </Link>
 
-          <Link href="/step23" className="block">
+          <Link href={createUrlWithParams("Other")} className="block">
             <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-colors flex items-center gap-4">
               <span className="text-2xl">💬</span>
               <span className="text-lg">Other</span>

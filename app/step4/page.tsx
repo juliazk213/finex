@@ -20,7 +20,6 @@ export default function FineloQuizStep4() {
         <div className="bg-green-400 h-1 rounded-full" style={{ width: "11.11%" }}></div>
       </div>
 
-
       {/* Main Content */}
       <main className="flex-grow flex flex-col items-center justify-center">
         <div className="w-full max-w-2xl">
@@ -30,37 +29,37 @@ export default function FineloQuizStep4() {
 
           {/* Goal Options */}
           <div className="space-y-4">
-            <Link href="/step5" className="block">
+            <Link href="/step5?goal=Grow wealth" className="block">
               <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
                 <span className="text-2xl">💰</span>
                 <span className="text-base sm:text-lg">Grow wealth</span>
               </button>
             </Link>
-            <Link href="/step5" className="block">
+            <Link href="/step5?goal=Passive income" className="block">
               <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
                 <span className="text-2xl">⚡</span>
                 <span className="text-base sm:text-lg">Passive income</span>
               </button>
             </Link>
-            <Link href="/step5" className="block">
+            <Link href="/step5?goal=Financial independence" className="block">
               <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
                 <span className="text-2xl">🚀</span>
                 <span className="text-base sm:text-lg">Financial independence</span>
               </button>
             </Link>
-            <Link href="/step5" className="block">
+            <Link href="/step5?goal=Be my own boss" className="block">
               <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
                 <span className="text-2xl">😎</span>
                 <span className="text-base sm:text-lg">Be my own boss</span>
               </button>
             </Link>
-            <Link href="/step5" className="block">
+            <Link href="/step5?goal=Retire wealthy" className="block">
               <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
                 <span className="text-2xl">🏖️</span>
                 <span className="text-base sm:text-lg">Retire wealthy</span>
               </button>
             </Link>
-            <Link href="/step5" className="block">
+            <Link href="/step5?goal=Travel the world" className="block">
               <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 sm:p-6 rounded-lg text-left transition-colors flex items-center gap-4">
                 <span className="text-2xl">🌍</span>
                 <span className="text-base sm:text-lg">Travel the world</span>
