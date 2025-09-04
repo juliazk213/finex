@@ -8,10 +8,10 @@ export default function FineloQuizStep7() {
 
   // Função para navegar para a próxima página, mantendo todos os parâmetros existentes
   const handleContinue = () => {
-    // A função toString() nos dá a string de query completa (ex: "goal=Grow+wealth&income_source=..."),
+    // A função toString() nos dá a string de query completa (ex: "goal=...&income_source=..."),
     // que é exatamente o que precisamos repassar.
     router.push(`/step8?${searchParams.toString()}`)
-  }
+  } // <-- Certifique-se de que esta chave está aqui
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
@@ -22,12 +22,12 @@ export default function FineloQuizStep7() {
             <span className="text-green-400">F</span>inelo
           </div>
         </div>
-      </header
+      </header>
 
-      {/* Main Content - Adicionado 'flex-grow' para empurrar o botão para baixo */}
+      {/* Main Content */}
       <main className="flex-grow flex items-center justify-center p-4">
         <div className="flex flex-col lg:flex-row items-center justify-center gap-12 w-full max-w-6xl">
-          {/* Right Side - Motivational Image (Aparece primeiro no mobile) */}
+          {/* Right Side - Motivational Image */}
           <div className="flex-1 max-w-md order-first lg:order-none">
             <img
               src="/ed-phone-mountains.webp"
@@ -36,7 +36,7 @@ export default function FineloQuizStep7() {
             />
           </div>
 
-          {/* Left Side - Text Content (Centralizado no mobile) */}
+          {/* Left Side - Text Content */}
           <div className="flex-1 max-w-lg text-center lg:text-left">
             <h1 className="text-white text-3xl lg:text-4xl font-bold mb-6 text-balance">
               Great news! We can help you to get to the next level
@@ -49,7 +49,7 @@ export default function FineloQuizStep7() {
         </div>
       </main>
 
-      {/* Continue Button - <Link> substituído por <button> com onClick */}
+      {/* Continue Button */}
       <footer className="flex justify-center p-4">
         <div className="w-full max-w-md">
           <button
