@@ -1,3 +1,5 @@
+"use client" // Necessário para usar hooks
+
 import { Menu } from "lucide-react"
 import Link from "next/link"
 
