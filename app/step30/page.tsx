@@ -65,24 +65,33 @@ export default function FineloQuizStep30() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [timeLeft, setTimeLeft] = useState({ minutes: 9, seconds: 54 })
-  const [selectedPlan, setSelectedPlan] = useState("4-week") // Define o plano popular como padrão
+  const [selectedPlan, setSelectedPlan] = useState("4-week") 
   
-  // Lógica para obter o nome e gerar o código de cupom
   const nameFromUrl = searchParams.get("name") || "promo"
-  const couponCode = `${nameFromUrl.toLowerCase().replace(/\s+/g, "")}_sep2025` // Formato da imagem de referência
+  const couponCode = `${nameFromUrl.toLowerCase().replace(/\s+/g, "")}_sep2025`
   
-  // Lógica para obter goal e target (mantida por enquanto)
   const goalFromUrl = searchParams.get("goal") || "Financial independence"
   const targetFromUrl = searchParams.get("target") || "A perfect wedding"
-  
+
+  // --- 1. OBJETO COM OS LINKS DE CHECKOUT ---
+  const checkoutLinks = {
+    "1-week": "https://pay.hotmart.com/F101741375X?off=wsdusazd&checkoutMode=6",
+    "4-week": "https://pay.hotmart.com/F101741375X?off=ukrhh40a&checkoutMode=6",
+    "12-week": "https://pay.hotmart.com/F101741375X?off=jpg2crku&checkoutMode=6",
+  }
+
+  // --- 2. FUNÇÃO PARA ABRIR O LINK EM UMA NOVA GUIA ---
+  const handleGetPlan = () => {
+    const url = checkoutLinks[selectedPlan]
+    if (url) {
+      window.open(url, "_blank", "noopener,noreferrer")
+    }
+  }
 
   const subscriptionTerms = {
-    "1-week":
-      'By clicking "Get My Plan", you agree to automatic subscription renewal to Finelo: first week at €13.86, then €39.99 every 4 weeks (both excluding taxes) until you cancel. You can cancel anytime via support or account settings. See Subscription Terms for details.',
-    "4-week":
-      'By clicking "Get My Plan", you agree to automatic subscription renewal to Finelo: first 4 weeks at €39.99, then €39.99 every 4 weeks (both excluding taxes) until you cancel. You can cancel anytime via support or account settings. See Subscription Terms for details.',
-    "12-week":
-      'By clicking "Get My Plan", you agree to automatic subscription renewal to Finelo: first 12 weeks at €79.99, then €79.99 every 12 weeks (both excluding taxes) until you cancel. You can cancel anytime via support or account settings. See Subscription Terms for details.',
+    "1-week": 'By clicking on "Get My Plan", you agree to the automatic renewal of the Finelo subscription: $7 per week. You can cancel at any time through support or account settings. See the Subscription Terms for more details.',
+    "4-week": 'By clicking on "Get My Plan", you agree to the automatic renewal of the Finelo subscription: $23 every 4 weeks. You can cancel at any time through support or in the account settings. See the Subscription Terms for more details.',
+    "12-week": 'By clicking on "Get My Plan", you agree to the automatic renewal of the Finelo subscription: $47 every 12 weeks. You can cancel at any time through support or in the account settings. See the Subscription Terms for more details.',
   }
 
   useEffect(() => {
@@ -107,12 +116,13 @@ export default function FineloQuizStep30() {
           <div className="text-green-400 text-2xl font-bold">
             <span className="text-white">F</span>inelo
           </div>
-          <a
-            href="#pricing"
+          {/* --- BOTÃO 1 MODIFICADO --- */}
+          <button
+            onClick={handleGetPlan}
             className="bg-lime-400 text-black px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-lime-500 transition-colors pulse-animation"
           >
             GET MY PLAN
-          </a>
+          </button>
         </div>
       </header>
 
@@ -189,18 +199,15 @@ export default function FineloQuizStep30() {
               </div>
             </div>
 
-            {/* --- INÍCIO DA NOVA SEÇÃO DO CÓDIGO PROMOCIONAL --- */}
+            {/* Seção do Código Promocional */}
             <div className="max-w-xl mx-auto mb-10">
               <div className="bg-[#2E392A] rounded-xl p-4 text-left relative">
-                {/* Detalhe de recorte na borda */}
                 <div className="absolute -top-2 left-1/2 -ml-3 w-6 h-4 bg-black rounded-b-full"></div>
                 <div className="absolute -bottom-2 left-1/2 -ml-3 w-6 h-4 bg-black rounded-t-full"></div>
-                
                 <div className="flex items-center gap-2 mb-3">
                   <PercentIcon />
                   <p className="text-[#8EE054] font-bold">Your promo code is applied!</p>
                 </div>
-
                 <div className="bg-black rounded-lg p-3 flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <CheckIcon />
@@ -218,64 +225,59 @@ export default function FineloQuizStep30() {
                 </div>
               </div>
             </div>
-            {/* --- FIM DA NOVA SEÇÃO --- */}
-
+            
             {/* Planos de Preços */}
             <div className="flex flex-col gap-4 max-w-xl mx-auto mb-8">
-              {/* 1-WEEK PLAN */}
-              <div onClick={() => setSelectedPlan("1-week")} className={`bg-[#1C1C1E] rounded-xl p-5 border-2 transition-all cursor-pointer flex items-center justify-between ${selectedPlan === "1-week" ? "border-lime-400" : "border-transparent hover:border-gray-600"}`}>
+              <div onClick={() => setSelectedPlan("1-week")} className={`bg-[#1C1C1E] rounded-xl p-5 border-2 transition-all cursor-pointer flex items-center justify-between ${ selectedPlan === "1-week" ? "border-lime-400" : "border-transparent hover:border-gray-600" }`}>
                 <div className="flex items-center gap-4">
-                  <div className={`w-6 h-6 rounded-full border-2 ${selectedPlan === "1-week" ? "border-lime-400" : "border-gray-600"} flex items-center justify-center flex-shrink-0`}>
+                  <div className={`w-6 h-6 rounded-full border-2 ${ selectedPlan === "1-week" ? "border-lime-400" : "border-gray-600" } flex items-center justify-center flex-shrink-0`}>
                     {selectedPlan === "1-week" && <div className="w-3 h-3 bg-lime-400 rounded-full"></div>}
                   </div>
                   <div>
                     <h3 className="text-white font-bold">1-WEEK PLAN</h3>
-                    <p className="text-gray-400 text-sm">€13.86</p>
+                    <p className="text-gray-400 text-sm"><span className="text-gray-500 line-through mr-2">$14.00</span><span>$7.00</span></p>
                   </div>
                 </div>
                 <div className="flex flex-col items-end">
-                  <div className="flex items-baseline text-white font-bold"><span className="text-xl">€</span><span className="text-4xl tracking-tighter pr-0.5">1.</span><span className="text-xl font-semibold">98</span></div>
+                  <div className="flex items-baseline text-white font-bold"><span className="text-xl">$</span><span className="text-4xl tracking-tighter pr-0.5">1.</span><span className="text-xl font-semibold">00</span></div>
                   <p className="text-gray-400 text-sm -mt-1">per day</p>
                 </div>
               </div>
-              {/* 4-WEEK PLAN (O mais popular) */}
-              <div onClick={() => setSelectedPlan("4-week")} className={`bg-[#1C1C1E] rounded-xl border-2 transition-all cursor-pointer ${selectedPlan === "4-week" ? "border-lime-400" : "border-transparent hover:border-gray-600"}`}>
+              <div onClick={() => setSelectedPlan("4-week")} className={`bg-[#1C1C1E] rounded-xl border-2 transition-all cursor-pointer ${ selectedPlan === "4-week" ? "border-lime-400" : "border-transparent hover:border-gray-600" }`}>
                 <div className="bg-lime-400 text-black text-sm font-bold flex items-center justify-center gap-2 py-2 rounded-t-lg"><span>MOST POPULAR</span></div>
                 <div className="p-5 flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className={`w-6 h-6 rounded-full border-2 ${selectedPlan === "4-week" ? "border-lime-400" : "border-gray-600"} flex items-center justify-center flex-shrink-0`}>
+                    <div className={`w-6 h-6 rounded-full border-2 ${ selectedPlan === "4-week" ? "border-lime-400" : "border-gray-600" } flex items-center justify-center flex-shrink-0`}>
                       {selectedPlan === "4-week" && <div className="w-3 h-3 bg-lime-400 rounded-full"></div>}
                     </div>
                     <div>
                       <h3 className="text-white font-bold">4-WEEK PLAN</h3>
-                      <p className="text-gray-400 text-sm">€39.99</p>
+                      <p className="text-gray-400 text-sm"><span className="text-gray-500 line-through mr-2">$46.00</span><span>$23.00</span></p>
                     </div>
                   </div>
                   <div className="flex flex-col items-end">
-                    <div className="flex items-baseline text-white font-bold"><span className="text-xl">€</span><span className="text-4xl tracking-tighter pr-0.5">1.</span><span className="text-xl font-semibold">43</span></div>
+                    <div className="flex items-baseline text-white font-bold"><span className="text-xl">$</span><span className="text-4xl tracking-tighter pr-0.5">0.</span><span className="text-xl font-semibold">76</span></div>
                     <p className="text-gray-400 text-sm -mt-1">per day</p>
                   </div>
                 </div>
               </div>
-              {/* 12-WEEK PLAN */}
-              <div onClick={() => setSelectedPlan("12-week")} className={`bg-[#1C1C1E] rounded-xl p-5 border-2 transition-all cursor-pointer flex items-center justify-between ${selectedPlan === "12-week" ? "border-lime-400" : "border-transparent hover:border-gray-600"}`}>
+              <div onClick={() => setSelectedPlan("12-week")} className={`bg-[#1C1C1E] rounded-xl p-5 border-2 transition-all cursor-pointer flex items-center justify-between ${ selectedPlan === "12-week" ? "border-lime-400" : "border-transparent hover:border-gray-600" }`}>
                 <div className="flex items-center gap-4">
-                  <div className={`w-6 h-6 rounded-full border-2 ${selectedPlan === "12-week" ? "border-lime-400" : "border-gray-600"} flex items-center justify-center flex-shrink-0`}>
+                  <div className={`w-6 h-6 rounded-full border-2 ${ selectedPlan === "12-week" ? "border-lime-400" : "border-gray-600" } flex items-center justify-center flex-shrink-0`}>
                     {selectedPlan === "12-week" && <div className="w-3 h-3 bg-lime-400 rounded-full"></div>}
                   </div>
                   <div>
                     <h3 className="text-white font-bold">12-WEEK PLAN</h3>
-                    <p className="text-gray-400 text-sm">€79.99</p>
+                    <p className="text-gray-400 text-sm"><span className="text-gray-500 line-through mr-2">$94.00</span><span>$47.00</span></p>
                   </div>
                 </div>
                 <div className="flex flex-col items-end">
-                  <div className="flex items-baseline text-white font-bold"><span className="text-xl">€</span><span className="text-4xl tracking-tighter pr-0.5">0.</span><span className="text-xl font-semibold">95</span></div>
+                  <div className="flex items-baseline text-white font-bold"><span className="text-xl">$</span><span className="text-4xl tracking-tighter pr-0.5">0.</span><span className="text-xl font-semibold">52</span></div>
                   <p className="text-gray-400 text-sm -mt-1">per day</p>
                 </div>
               </div>
             </div>
 
-            {/* Container principal */}
             <div className="text-gray-400 text-sm mb-6 max-w-lg mx-auto">
               <div className="flex items-start gap-2">
                 <Image src="/pagina30/svgexport-9.png" alt="Info icon" width={16} height={16} className="mt-0.5 flex-shrink-0"/>
@@ -287,7 +289,11 @@ export default function FineloQuizStep30() {
               <p className="mt-2 text-xs text-slate-300">*According to a research by Finelo, 2023</p>
             </div>
             
-            <button className="bg-lime-400 text-black font-bold py-4 px-8 rounded-lg text-xl mb-6 w-full max-w-md hover:bg-lime-500 transition-colors pulse-animation">
+            {/* --- BOTÃO 2 MODIFICADO --- */}
+            <button
+              onClick={handleGetPlan}
+              className="bg-lime-400 text-black font-bold py-4 px-8 rounded-lg text-xl mb-6 w-full max-w-md hover:bg-lime-500 transition-colors pulse-animation"
+            >
               GET MY PLAN
             </button>
 
