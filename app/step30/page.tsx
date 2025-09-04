@@ -187,43 +187,44 @@ export default function FineloQuizStep30() {
               <CheckListItem>Know key trading terms and rules</CheckListItem>
             </div>
 
-            {/* Cards de Objetivo e Target - AJUSTADO PARA O ESTILO DA IMAGEM */}
-            <div className="container mx-auto px-4 max-w-3xl">
-              {/* Wrapper para controlar a largura máxima */}
-              <div className="flex flex-row gap-4 justify-center items-stretch mb-10">
-                {/* Card "Your goal" - Estilo Retangular */}
-                <div className="bg-[#1C1C1E] rounded-lg px-5 py-4 flex flex-row items-center justify-between w-1/2">
-                  {/* Grupo Esquerda: Ícone e Label */}
-                  <div className="flex items-center gap-3">
-                    <Image
-                      src="/pagina30/svgexport-10.png" // Ícone de escudo
-                      alt="Goal icon"
-                      width={20}
-                      height={20}
-                    />
-                    <p className="text-gray-400 text-sm">Your goal</p>
-                  </div>
-                  {/* Grupo Direita: Valor */}
-                  <p className="text-white font-bold text-lg">{goalFromUrl}</p>
-                </div>
+            {/* Cards de Objetivo e Target - CORRIGIDO PARA O ESTILO DA IMAGEM */}
+<div className="container mx-auto px-4 max-w-3xl">
+  <div className="flex flex-col sm:flex-row gap-4 justify-center items-stretch mb-10">
+    {/* Card "Your goal" - Estrutura Corrigida */}
+    <div className="bg-[#1C1C1E] rounded-xl px-5 py-4 flex flex-row items-center gap-4 w-full sm:w-1/2">
+      {/* Ícone */}
+      <Image
+        src="/pagina30/svgexport-10.png" // Ícone de escudo/check
+        alt="Goal icon"
+        width={24}
+        height={24}
+        className="flex-shrink-0"
+      />
+      {/* Grupo de Texto (Vertical) */}
+      <div>
+        <p className="text-gray-400 text-sm leading-tight">Your goal</p>
+        <p className="text-white font-bold text-lg leading-tight">{goalFromUrl}</p>
+      </div>
+    </div>
 
-                {/* Card "Your target" - Estilo Retangular */}
-                <div className="bg-[#1C1C1E] rounded-lg px-5 py-4 flex flex-row items-center justify-between w-1/2">
-                  {/* Grupo Esquerda: Ícone e Label */}
-                  <div className="flex items-center gap-3">
-                    <Image
-                      src="/pagina30/svgexport-9.png" // Ícone de alvo
-                      alt="Target icon"
-                      width={20}
-                      height={20}
-                    />
-                    <p className="text-gray-400 text-sm">Your target</p>
-                  </div>
-                  {/* Grupo Direita: Valor */}
-                  <p className="text-white font-bold text-lg">{targetFromUrl}</p>
-                </div>
-              </div>
-            </div>
+    {/* Card "Your target" - Estrutura Corrigida */}
+    <div className="bg-[#1C1C1E] rounded-xl px-5 py-4 flex flex-row items-center gap-4 w-full sm:w-1/2">
+      {/* Ícone */}
+      <Image
+        src="/pagina30/svgexport-9.png" // Ícone de alvo
+        alt="Target icon"
+        width={24}
+        height={24}
+        className="flex-shrink-0"
+      />
+      {/* Grupo de Texto (Vertical) */}
+      <div>
+        <p className="text-gray-400 text-sm leading-tight">Your target</p>
+        <p className="text-white font-bold text-lg leading-tight">{targetFromUrl}</p>
+      </div>
+    </div>
+  </div>
+</div>
 
             {/* Planos de Preços - ATUALIZADO PARA CORRESPONDER À IMAGEM */}
             <div className="flex flex-col gap-4 max-w-xl mx-auto mb-8">

@@ -1,23 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
 
 export default function FineloQuizStep23() {
-  const searchParams = useSearchParams()
-  const goal = searchParams.get("goal") || ""
-  const target = searchParams.get("target") || ""
-  const name = searchParams.get("name") || ""
-
-  const createStepUrl = (timeCommitment: string) => {
-    const params = new URLSearchParams()
-    if (goal) params.set("goal", goal)
-    if (target) params.set("target", target)
-    if (name) params.set("name", name)
-    params.set("time", timeCommitment)
-    return `/step24?${params.toString()}`
-  }
-
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
@@ -47,28 +32,28 @@ export default function FineloQuizStep23() {
 
         {/* Options */}
         <div className="w-full max-w-2xl space-y-4 mb-12">
-          <Link href={createStepUrl("5 min/day")} className="block">
+          <Link href="/step24" className="block">
             <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-colors flex items-center gap-4">
               <span className="text-2xl">👍</span>
               <span className="text-lg">5 min/day</span>
             </button>
           </Link>
 
-          <Link href={createStepUrl("10 min/day")} className="block">
+          <Link href="/step24" className="block">
             <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-colors flex items-center gap-4">
               <span className="text-2xl">👌</span>
               <span className="text-lg">10 min/day</span>
             </button>
           </Link>
 
-          <Link href={createStepUrl("15 min/day")} className="block">
+          <Link href="/step24" className="block">
             <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-colors flex items-center gap-4">
               <span className="text-2xl">🤟</span>
               <span className="text-lg">15 min/day</span>
             </button>
           </Link>
 
-          <Link href={createStepUrl("20 min/day")} className="block">
+          <Link href="/step24" className="block">
             <button className="w-full bg-gray-800 hover:bg-gray-700 text-white p-4 rounded-lg transition-colors flex items-center gap-4">
               <span className="text-2xl">💪</span>
               <span className="text-lg">20 min/day</span>
