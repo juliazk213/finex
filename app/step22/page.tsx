@@ -33,7 +33,7 @@ export default function FineloQuizStep22() {
           <div className="text-green-400 text-xl font-bold">
             <span className="text-green-400">F</span>inelo
           </div>
-          <div className="text-white text-sm">17/18</div>
+          <div className="text-white text-sm">17/20</div>
         </div>
         {/* Progress Bar */}
         <div className="w-full bg-gray-800 h-1">

@@ -46,7 +46,7 @@ export default function FineloQuizStep17() {
           <span className="text-green-400">F</span>inelo
         </div>
 
-        <div className="text-white text-sm">16 / 18</div>
+        <div className="text-white text-sm">13/20</div>
       </header>
 
       {/* Progress Bar */}
