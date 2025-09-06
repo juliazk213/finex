@@ -197,7 +197,7 @@ export default function FineloQuizStep26() {
             disabled={isLoading}
             className="bg-green-500 hover:bg-green-600 text-black font-semibold py-4 px-12 rounded-lg text-lg transition-colors w-full disabled:bg-gray-500 disabled:cursor-not-allowed"
           >
-            {isLoading ? "Processing..." : "CONTINUE"}
+            {isLoading ? "Processing..." : "UNLOCK MY BONUS!"}
           </button>
         </form>
       </div>
