@@ -1,20 +1,29 @@
-import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { Analytics } from '@vercel/analytics/next'
-import { Suspense } from 'react'
-// 1. Importe o componente Script do Next.js
-import Script from 'next/script' 
-import './globals.css'
+import type React from "react"
+import type { Metadata } from "next"
+import { Geist } from "next/font/google"
+import { Geist_Mono } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
+import { Suspense } from "react"
+import Script from "next/script"
+import "./globals.css"
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+})
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+})
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  title: "v0 App",
+  description: "Created with v0",
+  generator: "v0.app",
 }
 
-// 2. Defina seu GTM ID como uma constante para facilitar a manutenção
-const GTM_ID = 'GTM-NDKLDTXR'
+const GTM_ID = "GTM-NDKLDTXR"
 
 export default function RootLayout({
   children,
@@ -24,9 +33,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* 3. Adicione o script do Google Tag Manager para o <head> */}
-        {/*    Usamos o componente <Script> com a estratégia 'afterInteractive' */}
-        {/*    para carregar o script após a página se tornar interativa. */}
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -37,18 +43,16 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
-        {/* 4. Adicione a tag <noscript> imediatamente após a abertura do <body> */}
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
         <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
             width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
+            style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
-        
-        {/* Seu conteúdo existente */}
+
         <Suspense fallback={null}>
           {children}
           <Analytics />
